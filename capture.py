@@ -21,13 +21,18 @@ def capture_stream():
 		camera.capture(stream, format='jpeg')
 
 	data = np.fromstring(stream.getvalue(), dtype=np.uint8)
-	#data = np.flipud(np.fliplr(data))
 	image = cv2.imdecode(data, 1)
 	image = image[:, :, ::-1]
+	imgae = np.flipud(np.fliplr(image))
+
+	end = time.time()
+	print("拍照完成，耗時 {0:.3f} 秒。".format(end - start))
+
 
 	from PIL import Image
 	img = Image.fromarray(image, 'RGB')
 	img.save('test.png')
+
 
 if __name__ == '__main__':
 	capture_stream()
