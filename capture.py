@@ -23,7 +23,7 @@ def capture_stream():
 	data = np.fromstring(stream.getvalue(), dtype=np.uint8)
 	image = cv2.imdecode(data, 1)
 	image = image[:, :, ::-1]
-	imgae = np.flipud(np.fliplr(image))
+	image = np.flipud(np.fliplr(image))
 
 	end = time.time()
 	print("拍照完成，耗時 {0:.3f} 秒。".format(end - start))
