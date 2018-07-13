@@ -1,7 +1,7 @@
 # Raspberry-Pi
 
 # Take Picture
-`raspstill -o picture.name`
+`raspistill -o picture.name`
 
 ## Flip
 `-vf` vertical flip
