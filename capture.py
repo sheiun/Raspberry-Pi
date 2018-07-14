@@ -1,5 +1,12 @@
 import time
 from picamera import PiCamera
+from argparse import ArgumentParser
+
+def args_parser(parser):
+	parser.add_argument("start", help="開始的 FLAG", type=int)
+	parser.add_argument("end", help="結束的 FLAG", type=int)
+	args = parser.parse_args()
+	return args
 
 def take_off():
 	# 起飛
@@ -9,7 +16,7 @@ def landing():
 	# 降落
 	pass
 
-def black_line_dectect():
+def follow_line(color):
 	pass
 
 def capture_image(camera):
@@ -27,7 +34,7 @@ import numpy as np
 def capture_stream(camera):
 	start = time.time()
 	stream = io.BytesIO()
-	camera.capture(stream, format='jpeg')
+	camera.capture(stream, format='jpeg', quality=5)
 
 	data = np.fromstring(stream.getvalue(), dtype=np.uint8)
 	image = cv2.imdecode(data, 1)
@@ -40,14 +47,22 @@ def capture_stream(camera):
 
 	from PIL import Image
 	img = Image.fromarray(image, 'RGB')
-	img.save('test.png')
+	img.save('{}.jpg'.format(time.strftime("%Y%m%d-%H%M%S")))
 
 
 if __name__ == '__main__':
-	with PiCamera() as camera:
-		camera.start_preview()
-		capture_stream(camera)
-		camera.stop_preview()
+	parser = ArgumentParser()
+	args = args_parser(parser)
+
+	FLAG = args.start
+	FLAG_END = args.end
+
+	camera = PiCamera()
+	camera.start_preview()
+	capture_stream(camera)
+	camera.stop_preview()
+	# camera.close()
+
 	# FLAG = 0
 	# (起飛) 沿著黑線 直到 辨識燈號 (紅/綠)
 
