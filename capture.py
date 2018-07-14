@@ -12,11 +12,10 @@ def landing():
 def black_line_dectect():
 	pass
 
-def capture_image():
+def capture_image(camera):
 	start = time.time()
-	with PiCamera() as camera:
-		camera.resolution = (640, 480)
-		camera.capture('image.jpg')
+	camera.resolution = (640, 480)
+	camera.capture('image.jpg')
 
 	end = time.time()
 	print("拍照完成，耗時 {0:.3f} 秒。".format(end - start))
@@ -25,11 +24,10 @@ import io
 import cv2
 import numpy as np
 
-def capture_stream():
+def capture_stream(camera):
 	start = time.time()
 	stream = io.BytesIO()
-	with PiCamera() as camera:
-		camera.capture(stream, format='jpeg')
+	camera.capture(stream, format='jpeg')
 
 	data = np.fromstring(stream.getvalue(), dtype=np.uint8)
 	image = cv2.imdecode(data, 1)
@@ -46,7 +44,10 @@ def capture_stream():
 
 
 if __name__ == '__main__':
-	capture_stream()
+	with PiCamera() as camera:
+		camera.start_preview()
+		capture_stream(camera)
+		camera.stop_preview()
 	# FLAG = 0
 	# (起飛) 沿著黑線 直到 辨識燈號 (紅/綠)
 
