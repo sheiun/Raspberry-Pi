@@ -34,7 +34,7 @@ import numpy as np
 def capture_stream(camera):
 	start = time.time()
 	stream = io.BytesIO()
-	camera.capture(stream, format='jpeg', quality=5)
+	camera.capture(stream, format='jpeg', quality=4)
 
 	data = np.fromstring(stream.getvalue(), dtype=np.uint8)
 	image = cv2.imdecode(data, 1)
