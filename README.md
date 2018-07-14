@@ -1,13 +1,12 @@
 # Raspberry-Pi
 
-# Take Picture
-`raspistill -o picture.name`
+## Using Stream
 
-## Flip
-`-vf` vertical flip
-`-hf` horizonal flip
+### Quality Test
+`quality`
+* 3 : 顏色極少
+* 4 : 能有大部分的顏色
 
-## Quality Test
--q : 1 ~ 10 will be better
-
-## Size Test
+### Size Test
+`size`
+* 680 * 340 : 目前版本
