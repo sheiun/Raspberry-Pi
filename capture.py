@@ -1,5 +1,5 @@
 import time
-from picamera import PiCamera
+import picamera
 from argparse import ArgumentParser
 
 def args_parser(parser):
@@ -57,11 +57,11 @@ if __name__ == '__main__':
 	FLAG = args.start
 	FLAG_END = args.end
 
-	camera = PiCamera()
+	camera = picamera.PiCamera()
 	camera.start_preview()
 	capture_stream(camera)
 	camera.stop_preview()
-	# camera.close()
+	camera.close()
 
 	# FLAG = 0
 	# (起飛) 沿著黑線 直到 辨識燈號 (紅/綠)
